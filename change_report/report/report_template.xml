@@ -1,0 +1,35 @@
+<template id="new_template_report">
+    <!-- copy/paste standad template here and add the new report you want inside. -->
+
+
+    <div class="article o_report_layout_standard"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+        <t t-call="web.address_layout"/>
+        <t t-raw="0"/>
+    </div>
+
+
+    <t t-call="change_report.report_to_add"/>
+</template>
+
+
+<template id="report_to_add" inherit_id="classical report invoice">
+    <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+        <!-- the report you want to add into the new template report--->
+    </div>
+</template>
+
+
+<template id="report_invoice_document" inherit_id="change_report.new_template_report">
+
+</template>
+
+<report
+    id="account.account_invoices_new_template"
+    model="account.invoice"
+    string="New template"
+    report_type="qweb-pdf"
+    name="account.report_invoice"
+    file="account.report_invoice"
+    attachment="(object.state in ('open','in_payment','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
+    print_report_name="(object._get_report_base_filename())"
+/>

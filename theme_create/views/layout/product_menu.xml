@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="some_products">
+        <li t-foreach="products_menu" t-as="product" class="some-products">
+            <img t-attf-src="/website/image/product.template/{{product.id}}/image/10x30" class="img img-fluid" />
+            <a t-att-href="'/shop/product/%i' %(product.id)"><t t-esc="product.name"/></a>
+        </li>
+    </template>
+
+    <template id="footer_custom" inherit_id="website.footer_custom">
+        <xpath expr="//div[@id='connect']" position="inside">
+            <t t-set="products_menu" t-value="request.env['product.template'].search([('website_published','=',True)],limit=10)"/>
+            <t t-call="theme_create.some_products"/>
+        </xpath>
+    </template>
+
+
+    <template id="product_menu" inherit_id="portal.frontend_layout">
+        <xpath expr="//ul[hasclass('ml-auto')]" position="inside">
+            <t t-set="products_menu" t-value="request.env['product.template'].search([('website_published','=',True)],limit=5)"/>
+            <t t-call="theme_create.some_products"/>
+        </xpath>
+    </template>
+
+
+</odoo>
